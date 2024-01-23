@@ -1,0 +1,36 @@
+.header {
+	border: 2px solid black;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 15px 30px;
+}
+
+.headerLinks {
+	width: 30%;
+	display: flex;
+	justify-content: space-evenly;
+	font-size: 30px;
+	align-items: center;
+}
+
+.link {
+	border-radius: 5px;
+	padding: 0px 10px;
+	transition: background-color 0.3s linear;
+}
+
+.activeLink {
+	composes: link;
+	background-color: #101820;
+	color: white;
+}
+
+.inactiveLink {
+	composes: link;
+	color: #101820;
+}
+
+.inactiveLink:hover {
+	text-decoration: underline;
+}
