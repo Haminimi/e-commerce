@@ -1,9 +1,9 @@
 .header {
-	border: 2px solid black;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 15px 30px;
+	height: 20vh;
 }
 
 .headerLinks {
@@ -33,4 +33,9 @@
 
 .inactiveLink:hover {
 	text-decoration: underline;
+}
+
+.shopName {
+	font-family: 'Satisfy', cursive;
+	font-size: 65px;
 }
