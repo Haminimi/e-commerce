@@ -5,6 +5,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 	animation: cart 0.25s linear forwards;
+	gap: 30px;
 }
 
 @keyframes cart {
@@ -15,6 +16,11 @@
 	to {
 		opacity: 1;
 	}
+}
+
+.caption {
+	color: white;
+	margin-bottom: 20px;
 }
 
 table {
