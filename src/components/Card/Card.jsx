@@ -13,11 +13,7 @@ const Card = ({ product, addItem }) => {
 		<div key={product.id} className={styles.product}>
 			<div className={styles.imageAndPrice}>
 				<div className={styles.imageContainer}>
-					<img
-						src={product.image}
-						alt=""
-						className={styles.shopImage}
-					/>
+					<img src={product.image} alt="" className={styles.image} />
 				</div>
 
 				<div className={styles.priceContainer}>
@@ -35,7 +31,11 @@ const Card = ({ product, addItem }) => {
 						</h2>
 					</p>
 					<br />
-					<p className={styles.description}>{product.description}</p>
+					<p className={styles.description}>
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+						sed do eiusmod tempor incididunt ut labore et dolore
+						magna aliqua.
+					</p>
 				</div>
 
 				<div className={styles.inputAndButton}>
