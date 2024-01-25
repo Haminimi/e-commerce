@@ -10,18 +10,16 @@
 	background-size: cover;
 	background-position: center;
 	color: white;
-	animation: home 0.25s linear forwards;
+	animation: home 0.45s linear forwards;
 }
 
 @keyframes home {
-	from {
+	0% {
 		opacity: 0;
-		transform: translateY(-50%);
 	}
 
-	to {
+	100% {
 		opacity: 1;
-		transform: translateY(0%);
 	}
 }
 
