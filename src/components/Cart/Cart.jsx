@@ -64,7 +64,7 @@ const Cart = ({ cart }) => {
 						<th scope="col">Item</th>
 						<th scope="col">Price</th>
 						<th scope="col">Quantity</th>
-						<th scope="col">Total per item</th>
+						<th scope="col">Per item</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -72,11 +72,11 @@ const Cart = ({ cart }) => {
 						return (
 							<tr key={product.id}>
 								<td>{product.product.title}</td>
-								<td>{product.product.price} $</td>
+								<td>{product.product.price}$</td>
 								<td>{product.number}</td>
 								<td>
 									{Number(product.number) *
-										Number(product.product.price)}{' '}
+										Number(product.product.price)}
 									$
 								</td>
 							</tr>
@@ -87,7 +87,7 @@ const Cart = ({ cart }) => {
 							Total
 						</th>
 						<td className={styles.total}>
-							<b>{Number(total.toFixed(2))} $</b>
+							<b>{Number(total.toFixed(2))}$</b>
 						</td>
 					</tr>
 				</tbody>
