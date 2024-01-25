@@ -61,6 +61,15 @@
 	background-color: #101820;
 	border-radius: 10px 10px 0px 0px;
 	padding-left: 20px;
+	overflow: auto;
+}
+
+.detailsContainer::-webkit-scrollbar {
+	width: 7px;
+}
+
+.detailsContainer::-webkit-scrollbar-thumb {
+	border-radius: 3px;
 }
 
 .productTitle {
