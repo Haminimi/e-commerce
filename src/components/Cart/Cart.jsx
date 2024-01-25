@@ -95,6 +95,8 @@ const Cart = ({ cart }) => {
 					</p>
 					<span
 						onClick={closeModal}
+						onKeyDown={closeModal}
+						tabIndex={0}
 						className={`material-symbols-outlined ${styles.closeIcon}`}
 					>
 						close
