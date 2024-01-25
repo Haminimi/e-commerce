@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 import styles from './Cart.module.css';
 
 const Cart = ({ cart }) => {
+	const gitHubLink = useRef();
+
 	const total = cart.reduce(
 		(accumulator, product) =>
 			accumulator +
@@ -9,21 +12,8 @@ const Cart = ({ cart }) => {
 		0
 	);
 
-	if (cart.length === 0) {
-		return (
-			<div className={styles.cartContainer}>
-				<h1>Your cart is empty. Add some items in the shop. 🛒</h1>
-
-				<a href="https://github.com/Haminimi" className={styles.link}>
-					<i
-						className={`devicon-github-original ${styles.gitHubIcon}`}
-					></i>
-				</a>
-			</div>
-		);
-	}
-
 	function openModal() {
+		gitHubLink.current.focus();
 		const modal = document.querySelector('dialog');
 		modal.showModal();
 	}
@@ -41,6 +31,24 @@ const Cart = ({ cart }) => {
 		) {
 			closeModal();
 		}
+	}
+
+	if (cart.length === 0) {
+		return (
+			<div className={styles.cartContainer}>
+				<h1>Your cart is empty. Add some items in the shop. 🛒</h1>
+
+				<a
+					href="https://github.com/Haminimi"
+					className={styles.link}
+					ref={gitHubLink}
+				>
+					<i
+						className={`devicon-github-original ${styles.gitHubIcon}`}
+					></i>
+				</a>
+			</div>
+		);
 	}
 
 	return (
@@ -84,7 +92,11 @@ const Cart = ({ cart }) => {
 			</table>
 
 			<div className={styles.iconAndButton}>
-				<a href="https://github.com/Haminimi" className={styles.link}>
+				<a
+					href="https://github.com/Haminimi"
+					className={styles.link}
+					ref={gitHubLink}
+				>
 					<i
 						className={`devicon-github-original ${styles.gitHubIcon}`}
 					></i>
