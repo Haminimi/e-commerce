@@ -33,6 +33,16 @@ const Cart = ({ cart }) => {
 		modal.close();
 	}
 
+	function closeModalWithKeyboard(event) {
+		if (
+			event.key === 'Enter' ||
+			event.key === ' ' ||
+			event.key === 'Spacebar'
+		) {
+			closeModal();
+		}
+	}
+
 	return (
 		<div className={styles.cartContainer}>
 			<table>
@@ -94,8 +104,10 @@ const Cart = ({ cart }) => {
 						you were looking for.
 					</p>
 					<span
+						role="button"
+						aria-label="Close"
 						onClick={closeModal}
-						onKeyDown={closeModal}
+						onKeyDown={closeModalWithKeyboard}
 						tabIndex={0}
 						className={`material-symbols-outlined ${styles.closeIcon}`}
 					>
