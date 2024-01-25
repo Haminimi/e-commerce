@@ -14,7 +14,11 @@ const Card = ({ product, addItem }) => {
 		<div key={product.id} className={styles.product}>
 			<div className={styles.imageAndPrice}>
 				<div className={styles.imageContainer}>
-					<img src={product.image} alt="" className={styles.image} />
+					<img
+						src={product.image}
+						alt={product.title}
+						className={styles.image}
+					/>
 				</div>
 
 				<div className={styles.priceContainer}>
