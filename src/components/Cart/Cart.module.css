@@ -83,8 +83,10 @@ td:hover {
 	transition: border-color 0.2s linear;
 }
 
-.button:hover {
+.button:hover,
+.button:focus {
 	border-color: cornflowerblue;
+	outline: none;
 }
 
 .modal {
@@ -99,6 +101,10 @@ td:hover {
 	background-color: #101820;
 	color: white;
 	animation: modal 0.3s linear forwards;
+}
+
+.modal:focus {
+	outline: 3px solid white;
 }
 
 .modalContent {
