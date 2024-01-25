@@ -71,3 +71,20 @@ button {
 .material-symbols-outlined {
 	cursor: pointer;
 }
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: cornflowerblue;
+	border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgb(69, 120, 215);
+}
+
+::-webkit-scrollbar-thumb:active {
+	background-color: rgb(44, 95, 191);
+}
