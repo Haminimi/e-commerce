@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Card from '../Card/Card';
 import Loading from '../Loading/Loading';
 import ErrorPage from '../ErrorPage/ErrorPage';
@@ -125,6 +126,10 @@ const Shop = ({ addItem }) => {
 			</div>
 		</>
 	);
+};
+
+Shop.propTypes = {
+	addItem: PropTypes.func.isRequired,
 };
 
 export default Shop;
