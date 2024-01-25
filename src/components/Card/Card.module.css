@@ -112,7 +112,8 @@
 	transition: border-color 0.2s linear;
 }
 
-.buyButton:hover {
+.buyButton:hover,
+.buyButton:focus {
 	border-color: cornflowerblue;
 }
 
