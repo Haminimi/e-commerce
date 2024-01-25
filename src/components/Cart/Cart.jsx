@@ -39,11 +39,13 @@ const Cart = ({ cart }) => {
 				<h1>Your cart is empty. Add some items in the shop. 🛒</h1>
 
 				<a
+					aria-label="GitHub"
 					href="https://github.com/Haminimi"
 					className={styles.link}
 					ref={gitHubLink}
 				>
 					<i
+						aria-hidden="true"
 						className={`devicon-github-original ${styles.gitHubIcon}`}
 					></i>
 				</a>
@@ -93,11 +95,13 @@ const Cart = ({ cart }) => {
 
 			<div className={styles.iconAndButton}>
 				<a
+					aria-label="GitHub"
 					href="https://github.com/Haminimi"
 					className={styles.link}
 					ref={gitHubLink}
 				>
 					<i
+						aria-hidden="true"
 						className={`devicon-github-original ${styles.gitHubIcon}`}
 					></i>
 				</a>
