@@ -1,7 +1,8 @@
 .homeContainer {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
+	gap: 70px;
 	align-items: center;
 	width: 100%;
 	min-height: 80vh;
@@ -59,6 +60,7 @@
 @media only screen and (max-width: 900px) {
 	.homeContainer {
 		padding: 40px 20px;
+		gap: 40px;
 	}
 
 	.welcomeContainer {
