@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styles from './Header.module.css';
 
 const Header = ({ path, numberOfItems }) => {
@@ -53,6 +54,11 @@ const Header = ({ path, numberOfItems }) => {
 			</header>
 		</>
 	);
+};
+
+Header.propTypes = {
+	path: PropTypes.string.isRequired,
+	numberOfItems: PropTypes.number.isRequired,
 };
 
 export default Header;
