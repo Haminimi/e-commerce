@@ -41,7 +41,7 @@
 	padding: 0px 20px;
 	border-radius: 5px;
 	color: #101820;
-	font-size: 40px;
+	font-size: 2rem;
 	border: 2px solid #101820;
 }
 
@@ -116,7 +116,7 @@
 	transition: outline-color 0.2s linear;
 	background-color: #101820;
 	color: white;
-	font-size: 30px;
+	font-size: 1.6rem;
 	border: 2px solid white;
 	transition: border-color 0.2s linear;
 }
@@ -127,7 +127,7 @@
 }
 
 .addIcon {
-	font-size: 30px;
+	font-size: 1.6rem;
 }
 
 @media only screen and (max-width: 900px) {
