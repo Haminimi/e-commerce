@@ -137,3 +137,26 @@ td:hover {
 		transform: translate(-50%, -50%);
 	}
 }
+
+@media only screen and (max-width: 900px) {
+	.cartContainer {
+		padding: 30px 10px;
+	}
+	table {
+		width: 100%;
+		font-size: 16px;
+		height: auto;
+	}
+
+	th {
+		font-size: 20px;
+	}
+
+	.total {
+		font-size: 20px;
+	}
+
+	td {
+		text-align: center;
+	}
+}
