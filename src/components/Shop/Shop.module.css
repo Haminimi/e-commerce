@@ -1,0 +1,58 @@
+.shop {
+	padding: 20px 30px;
+	animation: shop 0.25s linear forwards;
+}
+
+@keyframes shop {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+.productsContainer {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+	gap: 30px;
+	width: 100%;
+}
+
+.header {
+	width: 100%;
+	border-radius: 5px;
+	background-color: white;
+}
+
+.links {
+	display: flex;
+	justify-content: space-evenly;
+	font-size: 26px;
+	margin-bottom: 30px;
+	border-radius: 10px;
+	padding: 10px 20px;
+	color: #101820;
+}
+
+.categoryLink {
+	height: 100%;
+	border-radius: 10px;
+	padding: 5px 30px;
+}
+
+.inactiveLink {
+	composes: categoryLink;
+	color: #101820;
+}
+
+.inactiveLink:hover {
+	text-decoration: underline;
+}
+
+.activeLink {
+	composes: categoryLink;
+	background-color: #101820;
+	color: white;
+}
