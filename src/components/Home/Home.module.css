@@ -67,14 +67,13 @@
 	}
 
 	.welcomeMessage {
-		font-size: 55px;
 		text-align: center;
+		font-size: 55px;
 	}
 
 	.p {
-		font-size: 20px;
 		text-align: center;
-		color: gainsboro;
+		font-size: 20px;
 	}
 
 	.link {
