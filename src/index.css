@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mynerve&family=Roboto&family=Satisfy&display=swap');
+
 *,
 *::before,
 *::after {
@@ -43,4 +45,29 @@ h6 {
 #root,
 #__next {
 	isolation: isolate;
+}
+
+:root {
+	font-size: 18px;
+	font-family: 'Roboto', sans-serif;
+}
+
+body {
+	background-color: #101820;
+	color: white;
+}
+
+a {
+	text-decoration: none;
+}
+
+button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+.material-symbols-outlined {
+	cursor: pointer;
 }
