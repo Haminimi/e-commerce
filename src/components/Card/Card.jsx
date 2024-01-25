@@ -30,11 +30,9 @@ const Card = ({ product, addItem }) => {
 
 			<div className={styles.descriptionAndButton}>
 				<div className={styles.detailsContainer}>
-					<p className={styles.productTitle}>
-						<h2 className={styles.productTitle}>
-							<b>{product.title}</b>
-						</h2>
-					</p>
+					<h2 className={styles.productTitle}>
+						<b>{product.title}</b>
+					</h2>
 					<br />
 					<p className={styles.description}>
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit,
