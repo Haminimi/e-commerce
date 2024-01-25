@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './Cart.module.css';
 
 const Cart = ({ cart }) => {
@@ -102,6 +103,10 @@ const Cart = ({ cart }) => {
 			</dialog>
 		</div>
 	);
+};
+
+Cart.propTypes = {
+	cart: PropTypes.array.isRequired,
 };
 
 export default Cart;
