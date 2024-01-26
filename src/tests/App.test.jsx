@@ -9,6 +9,7 @@ import Router from '../Router';
 import { act } from 'react-dom/test-utils';
 import Card from '../components/Card/Card';
 import ErrorPage from '../components/ErrorPage/ErrorPage';
+import Loading from '../components/Loading/Loading';
 
 describe('Cart component', () => {
 	it('should render a heading for the empty cart', () => {
@@ -215,7 +216,7 @@ describe('Card component', () => {
 	});
 });
 
-describe.only('ErrorPage component', () => {
+describe('ErrorPage component', () => {
 	it('should render the error message', () => {
 		render(
 			<BrowserRouter>
@@ -228,5 +229,15 @@ describe.only('ErrorPage component', () => {
 		);
 
 		expect(message).toBeInTheDocument();
+	});
+});
+
+describe.only('Loading component', () => {
+	it('should render the loading animation', () => {
+		render(<Loading />);
+
+		const animation = screen.getByTestId('loading-animation');
+
+		expect(animation).toBeInTheDocument();
 	});
 });
