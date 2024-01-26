@@ -51,6 +51,7 @@ const Card = ({ product, addItem }) => {
 					<button className={styles.buyButton} onClick={handleClick}>
 						Add{' '}
 						<span
+							aria-hidden="true"
 							className={`material-symbols-outlined ${styles.addIcon}`}
 						>
 							add
