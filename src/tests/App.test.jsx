@@ -3,10 +3,11 @@ import userEvent from '@testing-library/user-event';
 import Cart from '../components/Cart/Cart';
 import Home from '../components/Home/Home';
 import Header from '../components/Header/Header';
-import { expect, vi } from 'vitest';
+import { expect, it, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import Router from '../Router';
 import { act } from 'react-dom/test-utils';
+import Card from '../components/Card/Card';
 
 describe('Cart component', () => {
 	it('should render a heading for the empty cart', () => {
@@ -117,7 +118,7 @@ describe('Home component', () => {
 	});
 });
 
-describe.only('Header component', () => {
+describe('Header component', () => {
 	it('should render the store name', () => {
 		render(
 			<Router>
@@ -164,6 +165,51 @@ describe.only('Header component', () => {
 
 			const numberOfItems = screen.getByTestId('number-of-items');
 			expect(numberOfItems).toHaveTextContent('1');
+		});
+	});
+});
+
+describe.only('Card component', () => {
+	const product = {
+		category: "men's clothing",
+		id: 1,
+		image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+		price: 109.95,
+		title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+	};
+
+	it('should render a product information', () => {
+		render(<Card product={product} />);
+
+		const title = screen.getByRole('heading', {
+			name: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+		});
+		const price = screen.getByRole('heading', { name: '109.95 $' });
+
+		expect(title).toBeInTheDocument();
+		expect(price).toBeInTheDocument();
+	});
+
+	describe('Add button', () => {
+		it('should render the add button', () => {
+			render(<Card product={product} />);
+
+			const button = screen.getByRole('button', { name: 'Add' });
+
+			expect(button).toBeInTheDocument();
+		});
+
+		it('should call the onClick function when clicked', async () => {
+			const onClick = vi.fn();
+			const user = userEvent.setup();
+
+			render(<Card product={product} addItem={onClick} />);
+
+			const button = screen.getByRole('button', { name: 'Add' });
+
+			await user.click(button);
+
+			expect(onClick).toHaveBeenCalled();
 		});
 	});
 });
