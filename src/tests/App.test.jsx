@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Router from '../Router';
 import { act } from 'react-dom/test-utils';
 import Card from '../components/Card/Card';
+import ErrorPage from '../components/ErrorPage/ErrorPage';
 
 describe('Cart component', () => {
 	it('should render a heading for the empty cart', () => {
@@ -169,7 +170,7 @@ describe('Header component', () => {
 	});
 });
 
-describe.only('Card component', () => {
+describe('Card component', () => {
 	const product = {
 		category: "men's clothing",
 		id: 1,
@@ -211,5 +212,21 @@ describe.only('Card component', () => {
 
 			expect(onClick).toHaveBeenCalled();
 		});
+	});
+});
+
+describe.only('ErrorPage component', () => {
+	it('should render the error message', () => {
+		render(
+			<BrowserRouter>
+				<ErrorPage />
+			</BrowserRouter>
+		);
+
+		const message = screen.getByText(
+			/Oh no, this route doesn't exist or there was a network error encountered./
+		);
+
+		expect(message).toBeInTheDocument();
 	});
 });
