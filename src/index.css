@@ -88,3 +88,9 @@ button {
 ::-webkit-scrollbar-thumb:active {
 	background-color: rgb(44, 95, 191);
 }
+
+@media only screen and (min-width: 1800px) {
+	:root {
+		font-size: 20px;
+	}
+}
