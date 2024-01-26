@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Cart from '../components/Cart/Cart';
+import Home from '../components/Home/Home';
 import { expect, vi } from 'vitest';
 
 describe('Cart component', () => {
@@ -87,5 +88,27 @@ describe('Cart component', () => {
 			await user.click(closeButton);
 			expect(HTMLDialogElement.prototype.close).toHaveBeenCalled();
 		});
+	});
+});
+
+describe.only('Home component', () => {
+	it('should render a welcome heading', () => {
+		render(<Home />);
+		const welcomeHeading = screen.getByRole('heading', { name: 'Welcome' });
+		expect(welcomeHeading).toBeInTheDocument();
+	});
+
+	it('should render a welcome message', () => {
+		render(<Home />);
+		const welcomeMessage = screen.getByText(
+			/Discover a world of virtual shopping/
+		);
+		expect(welcomeMessage).toBeInTheDocument();
+	});
+
+	it('should render a credit link', () => {
+		render(<Home />);
+		const link = screen.getByRole('link', { name: 'Artem Gavrysh' });
+		expect(link).toBeInTheDocument();
 	});
 });
