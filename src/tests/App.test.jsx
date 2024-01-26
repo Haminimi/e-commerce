@@ -1,4 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitFor,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Cart from '../components/Cart/Cart';
 import Home from '../components/Home/Home';
@@ -10,6 +15,7 @@ import { act } from 'react-dom/test-utils';
 import Card from '../components/Card/Card';
 import ErrorPage from '../components/ErrorPage/ErrorPage';
 import Loading from '../components/Loading/Loading';
+import Shop from '../components/Shop/Shop';
 
 describe('Cart component', () => {
 	it('should render a heading for the empty cart', () => {
@@ -232,12 +238,106 @@ describe('ErrorPage component', () => {
 	});
 });
 
-describe.only('Loading component', () => {
+describe('Loading component', () => {
 	it('should render the loading animation', () => {
 		render(<Loading />);
 
 		const animation = screen.getByTestId('loading-animation');
 
 		expect(animation).toBeInTheDocument();
+	});
+});
+
+describe.only('Shop component', () => {
+	it('should show the Loading component while API request is in progress', async () => {
+		render(
+			<BrowserRouter>
+				<Shop />
+			</BrowserRouter>
+		);
+
+		const loading = screen.getByTestId('loading-animation');
+
+		expect(loading).toBeInTheDocument();
+
+		await waitForElementToBeRemoved(() =>
+			screen.getByTestId('loading-animation')
+		);
+	});
+
+	window.fetch = vi.fn(() => {
+		const products = [
+			{
+				category: "men's clothing",
+				id: 1,
+				image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+				price: 109.95,
+				title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+			},
+		];
+
+		return Promise.resolve({
+			json: () => Promise.resolve(products),
+		});
+	});
+
+	it('should show the Error component when a request fails', async () => {
+		window.fetch.mockImplementationOnce(() => {
+			return Promise.reject({ message: 'API is down' });
+		});
+
+		render(
+			<BrowserRouter>
+				<Shop />
+			</BrowserRouter>
+		);
+
+		const errorMessage = await screen.findByText(
+			/Oh no, this route doesn't exist or there was a network error encountered./
+		);
+
+		expect(errorMessage).toBeInTheDocument();
+	});
+
+	describe('Navbar', () => {
+		it('should render the navbar', async () => {
+			render(
+				<BrowserRouter>
+					<Shop />
+				</BrowserRouter>
+			);
+
+			const navbar = await screen.findByTestId('category-navbar');
+
+			expect(navbar).toBeInTheDocument();
+		});
+
+		it('it should switch a category on the click', async () => {
+			const user = userEvent.setup();
+
+			render(
+				<BrowserRouter>
+					<Shop />
+				</BrowserRouter>
+			);
+
+			const navbarLink = await screen.findByTestId("women's-clothing");
+
+			await user.click(navbarLink);
+
+			expect(navbarLink).toHaveClass('_activeLink_008a62');
+		});
+	});
+
+	it('should render the Card component', async () => {
+		render(
+			<BrowserRouter>
+				<Shop />
+			</BrowserRouter>
+		);
+
+		const card = await screen.findByTestId('card');
+
+		expect(card).toBeInTheDocument();
 	});
 });
