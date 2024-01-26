@@ -4,6 +4,7 @@ import styles from './Cart.module.css';
 
 const Cart = ({ cart }) => {
 	const gitHubLink = useRef();
+	const modalRef = useRef();
 
 	const total = cart.reduce(
 		(accumulator, product) =>
@@ -14,13 +15,11 @@ const Cart = ({ cart }) => {
 
 	function openModal() {
 		gitHubLink.current.focus();
-		const modal = document.querySelector('dialog');
-		modal.showModal();
+		modalRef.current.showModal();
 	}
 
 	function closeModal() {
-		const modal = document.querySelector('dialog');
-		modal.close();
+		modalRef.current.close();
 	}
 
 	function closeModalWithKeyboard(event) {
@@ -86,7 +85,7 @@ const Cart = ({ cart }) => {
 						<th colSpan={3} scope="row">
 							Total
 						</th>
-						<td className={styles.total}>
+						<td data-testid="total" className={styles.total}>
 							<b>{Number(total.toFixed(2))}$</b>
 						</td>
 					</tr>
@@ -110,7 +109,7 @@ const Cart = ({ cart }) => {
 				</button>
 			</div>
 
-			<dialog className={styles.modal}>
+			<dialog ref={modalRef} className={styles.modal}>
 				<div className={styles.modalContent}>
 					<h2>Thank You for Shopping with Us! ❤️</h2>
 					<p>
