@@ -16,6 +16,8 @@ import Card from '../components/Card/Card';
 import ErrorPage from '../components/ErrorPage/ErrorPage';
 import Loading from '../components/Loading/Loading';
 import Shop from '../components/Shop/Shop';
+import App from '../components/App/App';
+import { useLocation, useParams } from 'react-router-dom';
 
 describe('Cart component', () => {
 	it('should render a heading for the empty cart', () => {
@@ -248,7 +250,7 @@ describe('Loading component', () => {
 	});
 });
 
-describe.only('Shop component', () => {
+describe('Shop component', () => {
 	it('should show the Loading component while API request is in progress', async () => {
 		render(
 			<BrowserRouter>
@@ -339,5 +341,53 @@ describe.only('Shop component', () => {
 		const card = await screen.findByTestId('card');
 
 		expect(card).toBeInTheDocument();
+	});
+});
+
+describe.only('App component', () => {
+	vi.mock('react-router-dom', async (importOriginal) => {
+		const actual = await importOriginal();
+		return {
+			...actual,
+			useLocation: vi.fn(),
+			useParams: vi.fn(),
+		};
+	});
+
+	it('should render the Header component', () => {
+		useLocation.mockReturnValue({ pathname: '/shop' });
+		useParams.mockReturnValue({ name: 'shop' });
+
+		render(
+			<Router>
+				<App />
+			</Router>
+		);
+
+		const header = screen.getByTestId('header');
+		expect(header).toBeInTheDocument();
+
+		useLocation.mockReset();
+		useParams.mockReset();
+	});
+
+	it('it should render the Cart component', () => {
+		useLocation.mockReturnValue({ pathname: '/cart' });
+		useParams.mockReturnValue({ name: 'cart' });
+
+		render(
+			<Router>
+				<App />
+			</Router>
+		);
+
+		const emptyCart = screen.getByRole('heading', {
+			name: 'Your cart is empty. Add some items in the shop. 🛒',
+		});
+
+		expect(emptyCart).toBeInTheDocument();
+
+		useLocation.mockReset();
+		useParams.mockReset();
 	});
 });
