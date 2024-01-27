@@ -34,8 +34,6 @@ const Shop = ({ addItem }) => {
 		fetchData();
 	}, [url]);
 
-	console.log(products);
-
 	function handleUrlChange(category) {
 		if (category === 'all products') {
 			setUrl('https://fakestoreapi.com/products');
