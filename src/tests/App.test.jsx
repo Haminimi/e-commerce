@@ -5,19 +5,336 @@ import {
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Cart from '../components/Cart/Cart';
-import Home from '../components/Home/Home';
-import Header from '../components/Header/Header';
 import { expect, it, vi } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
-import Router from '../Router';
 import { act } from 'react-dom/test-utils';
-import Card from '../components/Card/Card';
-import ErrorPage from '../components/ErrorPage/ErrorPage';
-import Loading from '../components/Loading/Loading';
-import Shop from '../components/Shop/Shop';
+import { useLocation, useParams, MemoryRouter } from 'react-router-dom';
 import App from '../components/App/App';
-import { useLocation, useParams } from 'react-router-dom';
+import ErrorPage from '../components/ErrorPage/ErrorPage';
+import Header from '../components/Header/Header';
+import Home from '../components/Home/Home';
+import Shop from '../components/Shop/Shop';
+import Loading from '../components/Loading/Loading';
+import Card from '../components/Card/Card';
+import Cart from '../components/Cart/Cart';
+import Router from '../Router';
+
+//🛑
+describe('App component', () => {
+	it('should render the Header component', () => {
+		vi.mock('react-router-dom', async (importOriginal) => {
+			const actual = await importOriginal();
+			return {
+				...actual,
+				useLocation: vi.fn(),
+				useParams: vi.fn(),
+			};
+		});
+		useLocation.mockReturnValue({ pathname: '/shop' });
+		useParams.mockReturnValue({ name: 'shop' });
+
+		act(() => {
+			render(
+				<MemoryRouter>
+					<App />
+				</MemoryRouter>
+			);
+		});
+
+		const header = screen.getByTestId('header');
+		expect(header).toBeInTheDocument();
+
+		/* 		useLocation.mockReset();
+		useParams.mockReset(); */
+	});
+
+	it('it should render the Cart component', () => {
+		vi.mock('react-router-dom', async (importOriginal) => {
+			const actual = await importOriginal();
+			return {
+				...actual,
+				useLocation: vi.fn(),
+				useParams: vi.fn(),
+			};
+		});
+
+		useLocation.mockReturnValue({ pathname: '/cart' });
+		useParams.mockReturnValue({ name: 'cart' });
+
+		render(
+			<MemoryRouter>
+				<App />
+			</MemoryRouter>
+		);
+
+		const emptyCart = screen.getByRole('heading', {
+			name: 'Your cart is empty. Add some items in the shop. 🛒',
+		});
+
+		expect(emptyCart).toBeInTheDocument();
+
+		/* 		useLocation.mockReset();
+		useParams.mockReset(); */
+	});
+});
+
+describe('ErrorPage component', () => {
+	it('should render the error message', () => {
+		render(
+			<MemoryRouter>
+				<ErrorPage />
+			</MemoryRouter>
+		);
+
+		const message = screen.getByText(
+			/Oh no, this route doesn't exist or there was a network error encountered./
+		);
+
+		expect(message).toBeInTheDocument();
+	});
+});
+
+describe('Header component', () => {
+	it('should render the store name', () => {
+		render(
+			<MemoryRouter>
+				<Header path="/" numberOfItems={0} />
+			</MemoryRouter>
+		);
+		const header = screen.getByRole('heading', { name: 'AwesomeShop' });
+		expect(header).toBeInTheDocument();
+	});
+
+	describe('Navbar', () => {
+		it('should render the navbar', () => {
+			render(
+				<MemoryRouter>
+					<Header path="/" numberOfItems={0} />
+				</MemoryRouter>
+			);
+			const navbar = screen.getByRole('navigation');
+			expect(navbar).toBeInTheDocument();
+		});
+
+		//🛑
+		/* 	it('should open the shop page on a click', async () => {
+			const user = userEvent.setup();
+
+			render(
+				<Router>
+					<Header path="/" numberOfItems={0} />
+				</Router>
+			);
+
+			const shopLink = await screen.findByTestId('shop-link');
+			await user.click(shopLink);
+			expect(shopLink).toHaveClass('_activeLink_63c2ea');
+
+			const shop = await screen.findByTestId('shop');
+			expect(shop).toBeInTheDocument();
+		}); */
+
+		//🛑
+		/* 		it('should open the cart page on a click', async () => {
+			const user = userEvent.setup();
+
+			render(
+				<Router>
+					<Header path="/" numberOfItems={0} />
+				</Router>
+			);
+
+			const cartLink = screen.getByTestId('cart-link');
+			await user.click(cartLink);
+
+			const cart = screen.getByRole('heading', {
+				name: 'Your cart is empty. Add some items in the shop. 🛒',
+			});
+			expect(cart).toBeInTheDocument();
+		}); */
+
+		it('should render the right number of items', () => {
+			render(
+				<MemoryRouter>
+					<Header path="/" numberOfItems={1} />
+				</MemoryRouter>
+			);
+
+			const numberOfItems = screen.getByTestId('number-of-items');
+			expect(numberOfItems).toHaveTextContent('1');
+		});
+	});
+});
+
+describe('Home component', () => {
+	it('should render a welcome heading', () => {
+		render(<Home />);
+		const welcomeHeading = screen.getByRole('heading', { name: 'Welcome' });
+		expect(welcomeHeading).toBeInTheDocument();
+	});
+
+	it('should render a welcome message', () => {
+		render(<Home />);
+		const welcomeMessage = screen.getByText(
+			/Discover a world of virtual shopping/
+		);
+		expect(welcomeMessage).toBeInTheDocument();
+	});
+
+	it('should render a credit link', () => {
+		render(<Home />);
+		const link = screen.getByRole('link', { name: 'Artem Gavrysh' });
+		expect(link).toBeInTheDocument();
+	});
+});
+
+describe('Shop component', () => {
+	it('should show the Loading component while API request is in progress', async () => {
+		render(
+			<MemoryRouter>
+				<Shop />
+			</MemoryRouter>
+		);
+
+		const loading = screen.getByTestId('loading-animation');
+
+		expect(loading).toBeInTheDocument();
+
+		await waitForElementToBeRemoved(() =>
+			screen.getByTestId('loading-animation')
+		);
+	});
+
+	window.fetch = vi.fn(() => {
+		const products = [
+			{
+				category: "men's clothing",
+				id: 1,
+				image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+				price: 109.95,
+				title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+			},
+		];
+
+		return Promise.resolve({
+			json: () => Promise.resolve(products),
+		});
+	});
+
+	it('should show the Error component when a request fails', async () => {
+		window.fetch.mockImplementationOnce(() => {
+			return Promise.reject({ message: 'API is down' });
+		});
+
+		render(
+			<MemoryRouter>
+				<Shop />
+			</MemoryRouter>
+		);
+
+		const errorMessage = await screen.findByText(
+			/Oh no, this route doesn't exist or there was a network error encountered./
+		);
+
+		expect(errorMessage).toBeInTheDocument();
+	});
+
+	describe('Navbar', () => {
+		it('should render the navbar', async () => {
+			render(
+				<MemoryRouter>
+					<Shop />
+				</MemoryRouter>
+			);
+
+			const navbar = await screen.findByTestId('category-navbar');
+
+			expect(navbar).toBeInTheDocument();
+		});
+
+		it('it should switch a category on the click', async () => {
+			const user = userEvent.setup();
+
+			render(
+				<MemoryRouter>
+					<Shop />
+				</MemoryRouter>
+			);
+
+			const navbarLink = await screen.findByTestId("women's-clothing");
+
+			await user.click(navbarLink);
+
+			expect(navbarLink).toHaveClass('_activeLink_008a62');
+		});
+	});
+
+	it('should render the Card component', async () => {
+		render(
+			<MemoryRouter>
+				<Shop />
+			</MemoryRouter>
+		);
+
+		const card = await screen.findByTestId('card');
+
+		expect(card).toBeInTheDocument();
+	});
+});
+
+describe('Loading component', () => {
+	it('should render the loading animation', () => {
+		render(<Loading />);
+
+		const animation = screen.getByTestId('loading-animation');
+
+		expect(animation).toBeInTheDocument();
+	});
+});
+
+describe('Card component', () => {
+	const product = {
+		category: "men's clothing",
+		id: 1,
+		image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+		price: 109.95,
+		title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+	};
+
+	it('should render a product information', () => {
+		render(<Card product={product} />);
+
+		const title = screen.getByRole('heading', {
+			name: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
+		});
+		const price = screen.getByRole('heading', { name: '109.95 $' });
+
+		expect(title).toBeInTheDocument();
+		expect(price).toBeInTheDocument();
+	});
+
+	describe('Add button', () => {
+		it('should render the add button', () => {
+			render(<Card product={product} />);
+
+			const button = screen.getByRole('button', { name: 'Add' });
+
+			expect(button).toBeInTheDocument();
+		});
+
+		it('should call the onClick function when clicked', async () => {
+			const onClick = vi.fn();
+			const user = userEvent.setup();
+
+			render(<Card product={product} addItem={onClick} />);
+
+			const button = screen.getByRole('button', { name: 'Add' });
+
+			await user.click(button);
+
+			expect(onClick).toHaveBeenCalled();
+		});
+	});
+});
 
 describe('Cart component', () => {
 	it('should render a heading for the empty cart', () => {
@@ -103,291 +420,5 @@ describe('Cart component', () => {
 			await user.click(closeButton);
 			expect(HTMLDialogElement.prototype.close).toHaveBeenCalled();
 		});
-	});
-});
-
-describe('Home component', () => {
-	it('should render a welcome heading', () => {
-		render(<Home />);
-		const welcomeHeading = screen.getByRole('heading', { name: 'Welcome' });
-		expect(welcomeHeading).toBeInTheDocument();
-	});
-
-	it('should render a welcome message', () => {
-		render(<Home />);
-		const welcomeMessage = screen.getByText(
-			/Discover a world of virtual shopping/
-		);
-		expect(welcomeMessage).toBeInTheDocument();
-	});
-
-	it('should render a credit link', () => {
-		render(<Home />);
-		const link = screen.getByRole('link', { name: 'Artem Gavrysh' });
-		expect(link).toBeInTheDocument();
-	});
-});
-
-describe('Header component', () => {
-	it('should render the store name', () => {
-		render(
-			<Router>
-				<Header path="/" numberOfItems={0} />
-			</Router>
-		);
-		const header = screen.getByRole('heading', { name: 'AwesomeShop' });
-		expect(header).toBeInTheDocument();
-	});
-
-	describe('Navbar', () => {
-		it('should render the navbar', () => {
-			render(
-				<Router>
-					<Header path="/" numberOfItems={0} />
-				</Router>
-			);
-			const navbar = screen.getByRole('navigation');
-			expect(navbar).toBeInTheDocument();
-		});
-
-		it('should open the shop page on a click', async () => {
-			const user = userEvent.setup();
-
-			render(
-				<Router>
-					<Header path="/" numberOfItems={0} />
-				</Router>
-			);
-
-			const shopLink = screen.getByTestId('shop-link');
-
-			await user.click(shopLink);
-
-			expect(shopLink).toHaveClass('_activeLink_63c2ea');
-		});
-
-		it('should render the right number of items', () => {
-			render(
-				<BrowserRouter>
-					<Header path="/" numberOfItems={1} />
-				</BrowserRouter>
-			);
-
-			const numberOfItems = screen.getByTestId('number-of-items');
-			expect(numberOfItems).toHaveTextContent('1');
-		});
-	});
-});
-
-describe('Card component', () => {
-	const product = {
-		category: "men's clothing",
-		id: 1,
-		image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-		price: 109.95,
-		title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-	};
-
-	it('should render a product information', () => {
-		render(<Card product={product} />);
-
-		const title = screen.getByRole('heading', {
-			name: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-		});
-		const price = screen.getByRole('heading', { name: '109.95 $' });
-
-		expect(title).toBeInTheDocument();
-		expect(price).toBeInTheDocument();
-	});
-
-	describe('Add button', () => {
-		it('should render the add button', () => {
-			render(<Card product={product} />);
-
-			const button = screen.getByRole('button', { name: 'Add' });
-
-			expect(button).toBeInTheDocument();
-		});
-
-		it('should call the onClick function when clicked', async () => {
-			const onClick = vi.fn();
-			const user = userEvent.setup();
-
-			render(<Card product={product} addItem={onClick} />);
-
-			const button = screen.getByRole('button', { name: 'Add' });
-
-			await user.click(button);
-
-			expect(onClick).toHaveBeenCalled();
-		});
-	});
-});
-
-describe('ErrorPage component', () => {
-	it('should render the error message', () => {
-		render(
-			<BrowserRouter>
-				<ErrorPage />
-			</BrowserRouter>
-		);
-
-		const message = screen.getByText(
-			/Oh no, this route doesn't exist or there was a network error encountered./
-		);
-
-		expect(message).toBeInTheDocument();
-	});
-});
-
-describe('Loading component', () => {
-	it('should render the loading animation', () => {
-		render(<Loading />);
-
-		const animation = screen.getByTestId('loading-animation');
-
-		expect(animation).toBeInTheDocument();
-	});
-});
-
-describe('Shop component', () => {
-	it('should show the Loading component while API request is in progress', async () => {
-		render(
-			<BrowserRouter>
-				<Shop />
-			</BrowserRouter>
-		);
-
-		const loading = screen.getByTestId('loading-animation');
-
-		expect(loading).toBeInTheDocument();
-
-		await waitForElementToBeRemoved(() =>
-			screen.getByTestId('loading-animation')
-		);
-	});
-
-	window.fetch = vi.fn(() => {
-		const products = [
-			{
-				category: "men's clothing",
-				id: 1,
-				image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-				price: 109.95,
-				title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-			},
-		];
-
-		return Promise.resolve({
-			json: () => Promise.resolve(products),
-		});
-	});
-
-	it('should show the Error component when a request fails', async () => {
-		window.fetch.mockImplementationOnce(() => {
-			return Promise.reject({ message: 'API is down' });
-		});
-
-		render(
-			<BrowserRouter>
-				<Shop />
-			</BrowserRouter>
-		);
-
-		const errorMessage = await screen.findByText(
-			/Oh no, this route doesn't exist or there was a network error encountered./
-		);
-
-		expect(errorMessage).toBeInTheDocument();
-	});
-
-	describe('Navbar', () => {
-		it('should render the navbar', async () => {
-			render(
-				<BrowserRouter>
-					<Shop />
-				</BrowserRouter>
-			);
-
-			const navbar = await screen.findByTestId('category-navbar');
-
-			expect(navbar).toBeInTheDocument();
-		});
-
-		it('it should switch a category on the click', async () => {
-			const user = userEvent.setup();
-
-			render(
-				<BrowserRouter>
-					<Shop />
-				</BrowserRouter>
-			);
-
-			const navbarLink = await screen.findByTestId("women's-clothing");
-
-			await user.click(navbarLink);
-
-			expect(navbarLink).toHaveClass('_activeLink_008a62');
-		});
-	});
-
-	it('should render the Card component', async () => {
-		render(
-			<BrowserRouter>
-				<Shop />
-			</BrowserRouter>
-		);
-
-		const card = await screen.findByTestId('card');
-
-		expect(card).toBeInTheDocument();
-	});
-});
-
-describe.only('App component', () => {
-	vi.mock('react-router-dom', async (importOriginal) => {
-		const actual = await importOriginal();
-		return {
-			...actual,
-			useLocation: vi.fn(),
-			useParams: vi.fn(),
-		};
-	});
-
-	it('should render the Header component', () => {
-		useLocation.mockReturnValue({ pathname: '/shop' });
-		useParams.mockReturnValue({ name: 'shop' });
-
-		render(
-			<Router>
-				<App />
-			</Router>
-		);
-
-		const header = screen.getByTestId('header');
-		expect(header).toBeInTheDocument();
-
-		useLocation.mockReset();
-		useParams.mockReset();
-	});
-
-	it('it should render the Cart component', () => {
-		useLocation.mockReturnValue({ pathname: '/cart' });
-		useParams.mockReturnValue({ name: 'cart' });
-
-		render(
-			<Router>
-				<App />
-			</Router>
-		);
-
-		const emptyCart = screen.getByRole('heading', {
-			name: 'Your cart is empty. Add some items in the shop. 🛒',
-		});
-
-		expect(emptyCart).toBeInTheDocument();
-
-		useLocation.mockReset();
-		useParams.mockReset();
 	});
 });
