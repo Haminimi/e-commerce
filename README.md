@@ -27,6 +27,7 @@ An E-Commerce site built with React. [The project](https://www.theodinproject.co
 **This section mentions the main topics covered during project work and prior lessons**
 - React Router
 - Testing - Vitest and React Testing Library
+- CSS Modules and styled-components
 <!-- ## Reflection
 Testing... -->
 ## Credits
