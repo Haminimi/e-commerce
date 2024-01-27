@@ -8,9 +8,8 @@ An E-Commerce site built with React. [The project](https://www.theodinproject.co
 - **Accessibility:** It is fully accessible and it respects various accessibility recommendations, such as including sufficient color contrasts, labeling, and keyboard support.
 - **Responsive Design:** It provides a consistent user experience across various screen sizes.
 - **Tested:** The project includes various tests that covers all of its components.
-
-**To Do:**
-- [ ] **Button Sound Effects**
+<!-- **To Do:**
+- [ ] **Button Sound Effects** -->
 ## Tech
 **The project is built with:**
 - React
