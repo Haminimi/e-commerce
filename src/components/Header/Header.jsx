@@ -7,7 +7,7 @@ const Header = ({ path, numberOfItems }) => {
 
 	return (
 		<>
-			<header className={styles.header}>
+			<header data-testid="header" className={styles.header}>
 				<h1 className={styles.shopName}>AwesomeShop </h1>
 
 				<nav className={styles.headerLinks}>
@@ -23,6 +23,7 @@ const Header = ({ path, numberOfItems }) => {
 					</Link>{' '}
 					<Link
 						to="/shop"
+						data-testid="shop-link"
 						className={
 							currentPath === '/shop'
 								? styles.activeLink
@@ -34,6 +35,7 @@ const Header = ({ path, numberOfItems }) => {
 					<div className={styles.shoppingCartContainer}>
 						<Link
 							to="/cart"
+							data-testid="cart-link"
 							className={
 								currentPath === '/cart'
 									? styles.activeCartLink
@@ -47,7 +49,9 @@ const Header = ({ path, numberOfItems }) => {
 							</span>
 						</Link>
 						<div className={styles.cartItemCount}>
-							<span>{numberOfItems}</span>
+							<span data-testid="number-of-items">
+								{numberOfItems}
+							</span>
 						</div>
 					</div>
 				</nav>

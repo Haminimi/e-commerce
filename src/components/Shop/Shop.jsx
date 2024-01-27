@@ -34,6 +34,8 @@ const Shop = ({ addItem }) => {
 		fetchData();
 	}, [url]);
 
+	console.log(products);
+
 	function handleUrlChange(category) {
 		if (category === 'all products') {
 			setUrl('https://fakestoreapi.com/products');
@@ -55,9 +57,9 @@ const Shop = ({ addItem }) => {
 
 	return (
 		<>
-			<div className={styles.shop}>
+			<div data-testid="shop" className={styles.shop}>
 				<header className={styles.header}>
-					<nav className={styles.links}>
+					<nav data-testid="category-navbar" className={styles.links}>
 						<Link
 							className={
 								currentCategory === 'all products'
@@ -69,6 +71,7 @@ const Shop = ({ addItem }) => {
 							All Products
 						</Link>
 						<Link
+							data-testid="women's-clothing"
 							className={
 								currentCategory === "women's clothing"
 									? styles.activeLink

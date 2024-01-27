@@ -11,7 +11,7 @@ const Card = ({ product, addItem }) => {
 	}
 
 	return (
-		<div key={product.id} className={styles.product}>
+		<div data-testid="card" key={product.id} className={styles.product}>
 			<div className={styles.imageAndPrice}>
 				<div className={styles.imageContainer}>
 					<img
