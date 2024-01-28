@@ -43,6 +43,8 @@ const Card = ({ product, addItem }) => {
 
 				<div className={styles.inputAndButton}>
 					<input
+						min={0}
+						max={99}
 						value={numberOfItems}
 						className={styles.input}
 						onChange={(e) => setNumberOfItems(e.target.value)}
