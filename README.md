@@ -1,4 +1,5 @@
-# E-Commerce 🛒
+# E-Commerce Site 🛒
+![Screenshot of the E-Commerce Site.](/screenshot.png)
 ## Description
 An E-Commerce site built with React. [The project](https://www.theodinproject.com/lessons/node-path-react-new-shopping-cart) is a part of [The Odin Project](https://www.theodinproject.com/dashboard)'s React course within [The Odin Project](https://www.theodinproject.com/dashboard)'s curriculum. The Odin Project provides a high quality web development education maintained by an open source community.
 ## Live Preview
@@ -16,12 +17,10 @@ An E-Commerce site built with React. [The project](https://www.theodinproject.co
 - CSS Modules
 
 **Tools**
-- Vite
-- React Router
-- Vitest
-- Cloudflare
-- Git
 - Visual Studio Code
+- Git
+- Vite
+- Vitest
 ## Covered Topics
 **This section mentions the main topics covered during project work and prior lessons**
 - React Router
