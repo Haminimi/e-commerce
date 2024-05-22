@@ -32,9 +32,4 @@ Testing... -->
 - Icon used for the favicon image is one of the [Smart cart icons created by ChilliColor - Flaticon](https://www.flaticon.com/free-icons/smart-cart).
 - Photo by [Artem Gavrysh](https://unsplash.com/@tmwd?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/black-trike-parked-near-soter-F6-U5fGAOik?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash).
 - [Fake Store API](https://fakestoreapi.com/).
-## Author
-- [GitHub](https://github.com/Haminimi)
-- [Exercism](https://exercism.org/profiles/Haminimi)
-- [LeetCode](https://leetcode.com/Haminimi/)
-- Email: haminimi.dev@gmail.com
 ## Happy coding!
