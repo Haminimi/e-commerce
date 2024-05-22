@@ -2,8 +2,7 @@
 ![Screenshot of the E-Commerce Site.](/screenshot.png)
 ## Description
 An SPA E-Commerce site built with React. [The project](https://www.theodinproject.com/lessons/node-path-react-new-shopping-cart) is a part of [The Odin Project](https://www.theodinproject.com/dashboard)'s React course within [The Odin Project](https://www.theodinproject.com/dashboard)'s curriculum. The Odin Project provides a high quality web development education maintained by an open source community.
-## Live Preview
-[The E-Commerce Site](https://e-commerce-aus.pages.dev/).
+## [Live Preview](https://e-commerce-aus.pages.dev/)
 ## Main Features
 - **SPA:** The app uses client-side routing with React Router.
 - **Accessibility:** It is fully accessible and it respects various accessibility recommendations, such as including sufficient color contrasts, labeling, and keyboard support.
